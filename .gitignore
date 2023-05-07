@@ -1,3 +1,4 @@
 
 .DS_Store
 mysite/mysite/secretKey.py
+*.pyc
