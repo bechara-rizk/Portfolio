@@ -2,3 +2,5 @@
 .DS_Store
 mysite/mysite/secretKey.py
 *.pyc
+*.pyc
+*/__pycache__/*
