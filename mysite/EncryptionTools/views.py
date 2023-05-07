@@ -11,7 +11,7 @@ from base64 import b64encode, b64decode
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'EncryptionTools/index.html')
 
 def base64_func(request):
     if request.method=='POST':
@@ -20,8 +20,8 @@ def base64_func(request):
             result=b64encode(text.encode('ascii')).decode('ascii')
         elif request.POST.get('decode'):
             result=b64decode(text.encode('ascii')).decode('ascii')
-        return render(request, 'base64.html', {'previous':text,'result':result})
-    return render(request, 'base64.html')
+        return render(request, 'EncryptionTools/base64.html', {'previous':text,'result':result})
+    return render(request, 'EncryptionTools/base64.html')
 
 def break_rsa_func(request):
     if request.method=="POST":
@@ -32,21 +32,21 @@ def break_rsa_func(request):
                 if e=='':
                     ei=None
                     p,q,phi=break_rsa.break_rsa(n)
-                    return render(request, 'break_rsa.html', {'previousn':n,'previouse':e,'p':p,'q':q,'phi':phi})
+                    return render(request, 'EncryptionTools/break_rsa.html', {'previousn':n,'previouse':e,'p':p,'q':q,'phi':phi})
                 else:
                     ei=int(e)
                     p,q,phi,d=break_rsa.break_rsa(n,ei)
-                    return render(request, 'break_rsa.html', {'previousn':n,'previouse':e,'p':p,'q':q,'phi':phi,'d':d})
+                    return render(request, 'EncryptionTools/break_rsa.html', {'previousn':n,'previouse':e,'p':p,'q':q,'phi':phi,'d':d})
         except:
-            return render(request, 'break_rsa.html', {'error':'Invalid input'})
-    return render(request, 'break_rsa.html')
+            return render(request, 'EncryptionTools/break_rsa.html', {'error':'Invalid input'})
+    return render(request, 'EncryptionTools/break_rsa.html')
 
 def enc_text(request):
     if request.method=='POST':
         text=request.POST.get('text')
         key=request.POST.get('key')
         if len(key.strip())==0 or len(text.strip())==0:
-            return render(request, 'enc_text.html', {'result':'key and text must not be empty', 'previoustext':text, 'previouskey':key})
+            return render(request, 'EncryptionTools/enc_text.html', {'result':'key and text must not be empty', 'previoustext':text, 'previouskey':key})
         hex_key=texthex.text_to_hex(key)
         hex_key=hex_key.zfill(64)
         if len(hex_key)>64:
@@ -57,8 +57,8 @@ def enc_text(request):
         elif request.POST.get('dec'):
             result=block_operations.operation('aes', 'ecb', hex_key, text, 'decrypt')
             result=texthex.hex_to_text(result)
-        return render(request, 'enc_text.html', {'previouskey':key,'previoustext':text,'result':result})
-    return render(request, 'enc_text.html')
+        return render(request, 'EncryptionTools/enc_text.html', {'previouskey':key,'previoustext':text,'result':result})
+    return render(request, 'EncryptionTools/enc_text.html')
 
 def dl(request):
     if request.method=='POST':
@@ -67,10 +67,10 @@ def dl(request):
                 base=int(request.POST.get('base'))
                 mod=int(request.POST.get('mod'))
                 table=primes.disc_log_table(base,mod)
-                return render(request, 'dl.html', {'previousbase':base,'previousmod':mod,'result':table})
+                return render(request, 'EncryptionTools/dl.html', {'previousbase':base,'previousmod':mod,'result':table})
         except:
-            return render(request, 'dl.html', {'error':'Invalid input'})
-    return render(request, 'dl.html')
+            return render(request, 'EncryptionTools/dl.html', {'error':'Invalid input'})
+    return render(request, 'EncryptionTools/dl.html')
 
 def pr(request):
     if request.method=='POST':
@@ -78,10 +78,10 @@ def pr(request):
             if request.POST.get('compute'):
                 n=int(request.POST.get('n'))
                 result=primes.primitive_roots(n)
-                return render(request, 'pr.html', {'previousn':n,'result':result})
+                return render(request, 'EncryptionTools/pr.html', {'previousn':n,'result':result})
         except:
-            return render(request, 'pr.html', {'error':'Invalid input'})
-    return render(request, 'pr.html', {'length':'auto auto auto'})
+            return render(request, 'EncryptionTools/pr.html', {'error':'Invalid input'})
+    return render(request, 'EncryptionTools/pr.html', {'length':'auto auto auto'})
 
 def crt(request):
     if request.method=='POST':
@@ -100,10 +100,10 @@ def crt(request):
                 else:
                     ai=int(a)
                 result=primes.CRT(mi,ai)
-                return render(request, 'crt.html', {'result':result,'previousm':m,'previousa':a})
+                return render(request, 'EncryptionTools/crt.html', {'result':result,'previousm':m,'previousa':a})
         except:
-            return render(request, 'crt.html', {'result':'Invalid input'})
-    return render(request, 'crt.html')
+            return render(request, 'EncryptionTools/crt.html', {'result':'Invalid input'})
+    return render(request, 'EncryptionTools/crt.html')
 
 def mr(request):
     if request.method=='POST':
@@ -125,10 +125,10 @@ def mr(request):
                     result=f'Maybe prime with probability {1-4**(-rounds)}'
                 else:
                     result='Not prime'
-                return render(request, 'mr.html', {'previousn':n,'previousrounds':rounds,'previousbase':a,'result':result})
+                return render(request, 'EncryptionTools/mr.html', {'previousn':n,'previousrounds':rounds,'previousbase':a,'result':result})
         except:
-            return render(request, 'mr.html', {'result':'Invalid input'})
-    return render(request, 'mr.html')
+            return render(request, 'EncryptionTools/mr.html', {'result':'Invalid input'})
+    return render(request, 'EncryptionTools/mr.html')
 
 def etf(request):
     if request.method=='POST':
@@ -136,10 +136,10 @@ def etf(request):
             if request.POST.get('compute'):
                 n=int(request.POST.get('n'))
                 result=primes.totient(n)
-                return render(request, 'etf.html', {'previousn':n, 'result':result})
+                return render(request, 'EncryptionTools/etf.html', {'previousn':n, 'result':result})
         except:
-            return render(request, 'etf.html', {'result':'Invalid input'})
-    return render(request, 'etf.html')
+            return render(request, 'EncryptionTools/etf.html', {'result':'Invalid input'})
+    return render(request, 'EncryptionTools/etf.html')
 
 def rpt(request):
     if request.method=='POST':
@@ -148,10 +148,10 @@ def rpt(request):
                 a=int(request.POST.get('a'))
                 b=int(request.POST.get('b'))
                 result=primes.rel_prime(a,b)
-                return render(request, 'rpt.html', {'previousa':a, 'previousb':b, 'result':str(result)})
+                return render(request, 'EncryptionTools/rpt.html', {'previousa':a, 'previousb':b, 'result':str(result)})
         except:
-            return render(request, 'rpt.html', {'result':'Invalid input'})
-    return render(request, 'rpt.html')
+            return render(request, 'EncryptionTools/rpt.html', {'result':'Invalid input'})
+    return render(request, 'EncryptionTools/rpt.html')
 
 def ecc(request):
     if request.method=='POST':
@@ -174,7 +174,7 @@ def ecc(request):
                 pmy=int(request.POST.get('pmy'))
                 Pm=(pmx,pmy)
                 Cm=ECC_encrypt(curve, G, Pm, P)
-                return render(request, 'ecc.html', {'previousa':a,'previousb':b,'previousp':p,'previousgx':gx,'previousgy':gy,'previouspx':px,'previouspy':py,'previouspmx':pmx,'previouspmy':pmy,'previouscm1x':Cm[0][0],'previouscm1y':Cm[0][1],'previouscm2x':Cm[1][0],'previouscm2y':Cm[1][1]})
+                return render(request, 'EncryptionTools/ecc.html', {'previousa':a,'previousb':b,'previousp':p,'previousgx':gx,'previousgy':gy,'previouspx':px,'previouspy':py,'previouspmx':pmx,'previouspmy':pmy,'previouscm1x':Cm[0][0],'previouscm1y':Cm[0][1],'previouscm2x':Cm[1][0],'previouscm2y':Cm[1][1]})
             if request.POST.get('dec'):
                 n=int(request.POST.get('n'))
                 cm1x=int(request.POST.get('cm1x'))
@@ -183,10 +183,10 @@ def ecc(request):
                 cm2y=int(request.POST.get('cm2y'))
                 Cm=((cm1x,cm1y),(cm2x,cm2y))
                 Pm=ECC_decrypt(curve, n, Cm)
-                return render(request, 'ecc.html', {'previousa':a,'previousb':b,'previousp':p,'previouspmx':Pm[0],'previouspmy':Pm[1],'previouscm1x':Cm[0][0],'previouscm1y':Cm[0][1],'previouscm2x':Cm[1][0],'previouscm2y':Cm[1][1], 'previousn':n})
+                return render(request, 'EncryptionTools/ecc.html', {'previousa':a,'previousb':b,'previousp':p,'previouspmx':Pm[0],'previouspmy':Pm[1],'previouscm1x':Cm[0][0],'previouscm1y':Cm[0][1],'previouscm2x':Cm[1][0],'previouscm2y':Cm[1][1], 'previousn':n})
         except:
-            return render(request, 'ecc.html', {'result':'Invalid input'})
-    return render(request, 'ecc.html')
+            return render(request, 'EncryptionTools/ecc.html', {'result':'Invalid input'})
+    return render(request, 'EncryptionTools/ecc.html')
 
 def ecdh(request):
     if request.method=='POST':
@@ -214,10 +214,10 @@ def ecdh(request):
                 else:
                     nbi=None
                 na,nb,PA,PB,K=ECC_DH(curve,(gx,gy),nai,nbi)
-                return render(request, 'ecdh.html', {'previousa':a,'previousb':b,'previousp':p,'previousgx':gx,'previousgy':gy,'previousna':na,'previousnb':nb,'previouspa':PA,'previouspb':PB,'previousk':K})
+                return render(request, 'EncryptionTools/ecdh.html', {'previousa':a,'previousb':b,'previousp':p,'previousgx':gx,'previousgy':gy,'previousna':na,'previousnb':nb,'previouspa':PA,'previouspb':PB,'previousk':K})
         except:
-            return render(request, 'ecdh.html', {'result':'Invalid input'})
-    return render(request, 'ecdh.html')
+            return render(request, 'EncryptionTools/ecdh.html', {'result':'Invalid input'})
+    return render(request, 'EncryptionTools/ecdh.html')
 
 def eco(request):
     if request.method=='POST':
@@ -247,10 +247,10 @@ def eco(request):
                 P=(int(px),int(py))
                 result=curve.mul(int(n),P)
                 result=f'{n} * ({px},{py}) = {result}'
-            return render(request, "eco.html", {'result':result,'resultpoints':resultpoints,'previousa':a,'previousb':b,'previousp':p,'previouspx':px,'previouspy':py,'previousqx':qx,'previousqy':qy,'previousn':n})
+            return render(request, 'EncryptionTools/eco.html', {'result':result,'resultpoints':resultpoints,'previousa':a,'previousb':b,'previousp':p,'previouspx':px,'previouspy':py,'previousqx':qx,'previousqy':qy,'previousn':n})
         except:
-            return render(request, "eco.html", {'result':'Invalid input'})
-    return render(request, 'eco.html')
+            return render(request, 'EncryptionTools/eco.html', {'result':'Invalid input'})
+    return render(request, 'EncryptionTools/eco.html')
 
 def elgamal(request):
     if request.method=='POST':
@@ -273,22 +273,22 @@ def elgamal(request):
                 else:
                     xai=None
                 q,a,xa,ya=asymetric_encryption.el_gamal_setup(q, ai, xai)
-                return render(request, 'elgamal.html', {'previousq':q,'previousa':a,'previousxa':xa,'previousya':ya, 'previousm':m, 'previousc1':c1, 'previousc2':c2})
+                return render(request, 'EncryptionTools/elgamal.html', {'previousq':q,'previousa':a,'previousxa':xa,'previousya':ya, 'previousm':m, 'previousc1':c1, 'previousc2':c2})
             elif request.POST.get('enc'):
                 a=int(a)
                 ya=int(ya)
                 m=int(m)
                 c1,c2=asymetric_encryption.el_gamal_encrypt(m,q,a,ya)
-                return render(request, 'elgamal.html', {'previousq':q,'previousa':a,'previousxa':xa,'previousya':ya, 'previousm':m, 'previousc1':c1, 'previousc2':c2})
+                return render(request, 'EncryptionTools/elgamal.html', {'previousq':q,'previousa':a,'previousxa':xa,'previousya':ya, 'previousm':m, 'previousc1':c1, 'previousc2':c2})
             elif request.POST.get('dec'):
                 xa=int(xa)
                 c1=int(c1)
                 c2=int(c2)
                 m=asymetric_encryption.el_gamal_decrypt(c1,c2,q,xa)
-                return render(request, 'elgamal.html', {'previousq':q,'previousa':a,'previousxa':xa,'previousya':ya, 'previousm':m, 'previousc1':c1, 'previousc2':c2})
+                return render(request, 'EncryptionTools/elgamal.html', {'previousq':q,'previousa':a,'previousxa':xa,'previousya':ya, 'previousm':m, 'previousc1':c1, 'previousc2':c2})
         except:
-            return render(request, 'elgamal.html', {'error':'Invalid input'})
-    return render(request, 'elgamal.html')
+            return render(request, 'EncryptionTools/elgamal.html', {'error':'Invalid input'})
+    return render(request, 'EncryptionTools/elgamal.html')
 
 def dh(request):
     if request.method=="POST" and request.POST.get('setup'):
@@ -311,10 +311,10 @@ def dh(request):
             else:
                 xbi=None
             a,xa,xb,ya,yb,key=asymetric_encryption.DH_key_exchange(q,ai,xai,xbi)
-            return render(request, 'dh.html', {'previousq': q,'previousa': a,'previousxa': xa,'previousxb': xb,'previousya': ya,'previousyb': yb,'previouskey': key})
+            return render(request, 'EncryptionTools/dh.html', {'previousq': q,'previousa': a,'previousxa': xa,'previousxb': xb,'previousya': ya,'previousyb': yb,'previouskey': key})
         except:
-            return render(request, 'dh.html', {'error': 'Invalid input', 'previousq': q,'previousa': a,'previousxa': xa,'previousxb': xb,'previousya': ya,'previousyb': yb,'previouskey': key})
-    return render(request, 'dh.html')
+            return render(request, 'EncryptionTools/dh.html', {'error': 'Invalid input', 'previousq': q,'previousa': a,'previousxa': xa,'previousxb': xb,'previousya': ya,'previousyb': yb,'previouskey': key})
+    return render(request, 'EncryptionTools/dh.html')
 
 def rsa(request):
     if request.method=="POST":
@@ -335,22 +335,22 @@ def rsa(request):
                 else:
                     ei=None
                 n,phi,e,d=asymetric_encryption.RSA_setup(p, q, ei)
-                return render(request, 'rsa.html', {"previousp":p, "previousq":q, "previouse":e, "previousm":m, "previousn":n, "previousphi":phi, "previousd":d, "previousc":c})
+                return render(request, 'EncryptionTools/rsa.html', {"previousp":p, "previousq":q, "previouse":e, "previousm":m, "previousn":n, "previousphi":phi, "previousd":d, "previousc":c})
             elif request.POST.get("enc"):
                 m=int(m)
                 e=int(e)
                 n=int(n)
                 result=asymetric_encryption.RSA_encrypt(m, e, n)
-                return render(request, 'rsa.html', {"previousp":p, "previousq":q, "previouse":e, "previousm":m, "previousn":n, "previousphi":phi, "previousd":d, "previousc":result})
+                return render(request, 'EncryptionTools/rsa.html', {"previousp":p, "previousq":q, "previouse":e, "previousm":m, "previousn":n, "previousphi":phi, "previousd":d, "previousc":result})
             elif request.POST.get("dec"):
                 c=int(c)
                 d=int(d)
                 n=int(n)
                 result=asymetric_encryption.RSA_encrypt(c, d, n)
-                return render(request, 'rsa.html', {"previousp":p, "previousq":q, "previouse":e, "previousm":result, "previousn":n, "previousphi":phi, "previousd":d, "previousc":c})
+                return render(request, 'EncryptionTools/rsa.html', {"previousp":p, "previousq":q, "previouse":e, "previousm":result, "previousn":n, "previousphi":phi, "previousd":d, "previousc":c})
         except:
-            return render(request, 'rsa.html', {'error': 'Invalid input',"previousp":p, "previousq":q, "previouse":e, "previousm":m, "previousn":n, "previousphi":phi, "previousd":d, "previousc":c})
-    return render(request, 'rsa.html')
+            return render(request, 'EncryptionTools/rsa.html', {'error': 'Invalid input',"previousp":p, "previousq":q, "previouse":e, "previousm":m, "previousn":n, "previousphi":phi, "previousd":d, "previousc":c})
+    return render(request, 'EncryptionTools/rsa.html')
 
 def ecdsa(request):
     if request.method=="POST":
@@ -381,7 +381,7 @@ def ecdsa(request):
                 else:
                     ki=None
                 result=digitial_signature.ECDSA_setup(curve, G, e, di, ki)
-                return render(request, 'ecdsa.html', {"previousa":a, "previousb":b, "previousp":p, "previousgx":gx, "previousgy":gy, "previouse":e, "previousd":result[4], "previousk":result[5], 'previousqx':result[0][0], 'previousqy':result[0][1], 'previousr':result[1], 'previouss':result[2], 'previousorder':result[3]})
+                return render(request, 'EncryptionTools/ecdsa.html', {"previousa":a, "previousb":b, "previousp":p, "previousgx":gx, "previousgy":gy, "previouse":e, "previousd":result[4], "previousk":result[5], 'previousqx':result[0][0], 'previousqy':result[0][1], 'previousr':result[1], 'previouss':result[2], 'previousorder':result[3]})
             elif request.POST.get("verify"):
                 qx=request.POST.get("qx")
                 qx=int(qx)
@@ -394,10 +394,10 @@ def ecdsa(request):
                 n=request.POST.get("order")
                 n=int(n)
                 result=digitial_signature.ECDSA_verify(curve, G, (qx, qy), e, r, s, n)
-                return render(request, 'ecdsa.html', {"text":result, "previousa":a, "previousb":b, "previousp":p, "previousgx":gx, "previousgy":gy, "previouse":e, "previousd":d, "previousk":k, 'previousqx':qx, 'previousqy':qy, 'previousr':r, 'previouss':s, 'previousorder':n})
+                return render(request, 'EncryptionTools/ecdsa.html', {"text":result, "previousa":a, "previousb":b, "previousp":p, "previousgx":gx, "previousgy":gy, "previouse":e, "previousd":d, "previousk":k, 'previousqx':qx, 'previousqy':qy, 'previousr':r, 'previouss':s, 'previousorder':n})
         except:
-            return render(request, 'ecdsa.html', {"text":"Please enter valid values", "previousa":a, "previousb":b, "previousp":p, "previousgx":gx, "previousgy":gy, "previouse":e, "previousd":d, "previousk":k, 'previousqx':qx, 'previousqy':qy, 'previousr':r, 'previouss':s, 'previousorder':n})
-    return render(request, 'ecdsa.html')
+            return render(request, 'EncryptionTools/ecdsa.html', {"text":"Please enter valid values", "previousa":a, "previousb":b, "previousp":p, "previousgx":gx, "previousgy":gy, "previouse":e, "previousd":d, "previousk":k, 'previousqx':qx, 'previousqy':qy, 'previousr':r, 'previouss':s, 'previousorder':n})
+    return render(request, 'EncryptionTools/ecdsa.html')
 
 def ds_eg(request):
     if request.method=="POST":
@@ -420,7 +420,7 @@ def ds_eg(request):
                 else:
                     xAi=None
                 result=digitial_signature.elgamal_ds_setup(q, a, m, xAi, ki)
-                return render(request, 'ds_eg.html', {"previousq":q, "previousa":a, "previousm":m, "previousxa":result[0], "previousk":result[1], "previousya":result[2], "previouss1":result[3], "previouss2":result[4]})
+                return render(request, 'EncryptionTools/ds_eg.html', {"previousq":q, "previousa":a, "previousm":m, "previousxa":result[0], "previousk":result[1], "previousya":result[2], "previouss1":result[3], "previouss2":result[4]})
             elif request.POST.get("verify"):
                 yA=request.POST.get("ya")
                 yA=int(yA)
@@ -429,12 +429,12 @@ def ds_eg(request):
                 s2=request.POST.get("s2")
                 s2=int(s2)
                 result=digitial_signature.elgamal_ds_verify(q, a, m, yA, (s1, s2))
-                return render(request, 'ds_eg.html', {"text":result, "previousq":q, "previousa":a, "previousm":m, "previousxa":xA, "previousk":k, "previousya":yA, "previouss1":s1, "previouss2":s2})
+                return render(request, 'EncryptionTools/ds_eg.html', {"text":result, "previousq":q, "previousa":a, "previousm":m, "previousxa":xA, "previousk":k, "previousya":yA, "previouss1":s1, "previouss2":s2})
             else:
                 result=''
         except:
-            return render(request, 'ds_eg.html', {"text":"Please enter valid values", "previousq":q, "previousa":a, "previousm":m, "previousxa":xA, "previousk":k, "previousya":yA, "previouss1":s1, "previouss2":s2})
-    return render(request, 'ds_eg.html')
+            return render(request, 'EncryptionTools/ds_eg.html', {"text":"Please enter valid values", "previousq":q, "previousa":a, "previousm":m, "previousxa":xA, "previousk":k, "previousya":yA, "previouss1":s1, "previouss2":s2})
+    return render(request, 'EncryptionTools/ds_eg.html')
 
 def ofb_func(request):
     if request.method=="POST":
@@ -464,10 +464,10 @@ def ofb_func(request):
                     result='Please enter IV'
             else:
                 result='error'
-            return render(request, 'ofb.html', {"text":result, "previouskey":request.POST.get("key"), "previoustext":request.POST.get("text"), "previousnonce":request.POST.get("nonce")})
+            return render(request, 'EncryptionTools/ofb.html', {"text":result, "previouskey":request.POST.get("key"), "previoustext":request.POST.get("text"), "previousnonce":request.POST.get("nonce")})
         except:
-            return render(request, 'ofb.html', {"text":'error', "previouskey":request.POST.get("key"), "previoustext":request.POST.get("text"), "previousnonce":request.POST.get("nonce")})
-    return render(request, 'ofb.html')
+            return render(request, 'EncryptionTools/ofb.html', {"text":'error', "previouskey":request.POST.get("key"), "previoustext":request.POST.get("text"), "previousnonce":request.POST.get("nonce")})
+    return render(request, 'EncryptionTools/ofb.html')
 
 def cbc_func(request):
     if request.method=="POST":
@@ -497,10 +497,10 @@ def cbc_func(request):
                     result='Please enter IV'
             else:
                 result='error'
-            return render(request, 'cbc.html', {"text":result, "previouskey":request.POST.get("key"), "previoustext":request.POST.get("text"), "previousiv":request.POST.get("iv")})
+            return render(request, 'EncryptionTools/cbc.html', {"text":result, "previouskey":request.POST.get("key"), "previoustext":request.POST.get("text"), "previousiv":request.POST.get("iv")})
         except:
-            return render(request, 'cbc.html', {"text":"error", "previouskey":request.POST.get("key"), "previoustext":request.POST.get("text"), "previousiv":request.POST.get("iv")})
-    return render(request, 'cbc.html')
+            return render(request, 'EncryptionTools/cbc.html', {"text":"error", "previouskey":request.POST.get("key"), "previoustext":request.POST.get("text"), "previousiv":request.POST.get("iv")})
+    return render(request, 'EncryptionTools/cbc.html')
 
 def ecb_func(request):
     if request.method=="POST":
@@ -517,10 +517,10 @@ def ecb_func(request):
                 result=block_operations.operation('des', 'ecb', key, text, 'decrypt')
             else:
                 result='error'
-            return render(request, 'ecb.html', {"text":result, "previouskey":request.POST.get("key"), "previoustext":request.POST.get("text")})
+            return render(request, 'EncryptionTools/ecb.html', {"text":result, "previouskey":request.POST.get("key"), "previoustext":request.POST.get("text")})
         except:
-            return render(request, 'ecb.html', {"text":"error", "previouskey":request.POST.get("key"), "previoustext":request.POST.get("text")})
-    return render(request, 'ecb.html')
+            return render(request, 'EncryptionTools/ecb.html', {"text":"error", "previouskey":request.POST.get("key"), "previoustext":request.POST.get("text")})
+    return render(request, 'EncryptionTools/ecb.html')
 
 def aes_func(request):
     clicked=''
@@ -542,8 +542,8 @@ def aes_func(request):
             else:
                 # print(request.POST.get("decrypt"))
                 text,key=a.decrypt(request.POST.get("text")),''
-        return render(request, 'aes.html', {"text":text, 'key':key, "clicked":clicked, "previouskey":request.POST.get("key"), "previoustext":request.POST.get("text")})
-    return render(request, 'aes.html', {"text":"", 'key':'', "clicked":clicked, "previouskey":'0f1571c947d9e8590cb7add6af7f6798', "previoustext":'ff0b844a0853bf7c6934ab4364148fb9'})
+        return render(request, 'EncryptionTools/aes.html', {"text":text, 'key':key, "clicked":clicked, "previouskey":request.POST.get("key"), "previoustext":request.POST.get("text")})
+    return render(request, 'EncryptionTools/aes.html', {"text":"", 'key':'', "clicked":clicked, "previouskey":'0f1571c947d9e8590cb7add6af7f6798', "previoustext":'ff0b844a0853bf7c6934ab4364148fb9'})
 
 def des_func(request):
     clicked=''
@@ -553,9 +553,9 @@ def des_func(request):
             int(request.POST.get("key"), 16)
             int(request.POST.get("text"), 16)
         except:
-            return render(request, 'des.html', {"text":"Please enter valid hex key and text", 'key':'', "clicked":clicked, "previouskey":request.POST.get('key'), "previoustext":request.POST.get('text')})
+            return render(request, 'EncryptionTools/des.html', {"text":"Please enter valid hex key and text", 'key':'', "clicked":clicked, "previouskey":request.POST.get('key'), "previoustext":request.POST.get('text')})
         if len(request.POST.get("key"))!=16 or len(request.POST.get("text"))!=16:
-            return render(request, 'des.html', {"text":"Please enter 16 character key and text", 'key':'', "clicked":clicked, "previouskey":request.POST.get('key'), "previoustext":request.POST.get('text')})
+            return render(request, 'EncryptionTools/des.html', {"text":"Please enter 16 character key and text", 'key':'', "clicked":clicked, "previouskey":request.POST.get('key'), "previoustext":request.POST.get('text')})
         if request.POST.get("show"):
             clicked='checked'
             a=DES(request.POST.get("key"), True)
@@ -574,8 +574,8 @@ def des_func(request):
                 # print(request.POST.get("decrypt"))
                 text,key=a.decrypt(request.POST.get("text")),''
                 text="Decrypted Text: "+text
-        return render(request, 'des.html', {"text":text, 'key':key, "clicked":clicked, "previouskey":request.POST.get("key"), "previoustext":request.POST.get("text")})
-    return render(request, 'des.html', {"text":"", 'key':'', "clicked":clicked, "previouskey":'0f1571c947d9e859', "previoustext":'02468aceeca86420'})
+        return render(request, 'EncryptionTools/des.html', {"text":text, 'key':key, "clicked":clicked, "previouskey":request.POST.get("key"), "previoustext":request.POST.get("text")})
+    return render(request, 'EncryptionTools/des.html', {"text":"", 'key':'', "clicked":clicked, "previouskey":'0f1571c947d9e859', "previoustext":'02468aceeca86420'})
 
 def text_hex(request):
     clicked=''
@@ -592,8 +592,8 @@ def text_hex(request):
             text=texthex.hex_to_text(text)
         else:
             text='error'
-        return render(request, 'text_hex.html', {'result':text, 'previous':clicked})
-    return render(request, 'text_hex.html',{'previous':clicked, 'result':''})
+        return render(request, 'EncryptionTools/text_hex.html', {'result':text, 'previous':clicked})
+    return render(request, 'EncryptionTools/text_hex.html',{'previous':clicked, 'result':''})
 
 def mod_inv(request):
     clicked=''
@@ -609,8 +609,8 @@ def mod_inv(request):
             # print(text)
         else:
             result='error'
-        return render(request, 'mod_inv.html', {'result':result, 'previous':clicked, 'previousmod':mod, 'previousnb':nb})
-    return render(request, 'mod_inv.html',{'previousnb':'', 'previousmod':'', 'result':''})
+        return render(request, 'EncryptionTools/mod_inv.html', {'result':result, 'previous':clicked, 'previousmod':mod, 'previousnb':nb})
+    return render(request, 'EncryptionTools/mod_inv.html',{'previousnb':'', 'previousmod':'', 'result':''})
 
 def exponentiation_func(request):
     if request.method=='POST':
@@ -628,8 +628,8 @@ def exponentiation_func(request):
             result='error'
         if result==0:
             result='0'
-        return render(request, 'exponentiation.html', {'result':result, 'previousmod':mod, 'previousexponent':exponent, 'previousbase':base})
-    return render(request, 'exponentiation.html',{'previousbase':'', 'previousexponent':'', 'previousmod':'', 'result':''})
+        return render(request, 'EncryptionTools/exponentiation.html', {'result':result, 'previousmod':mod, 'previousexponent':exponent, 'previousbase':base})
+    return render(request, 'EncryptionTools/exponentiation.html',{'previousbase':'', 'previousexponent':'', 'previousmod':'', 'result':''})
 
 def gfo(request):
     if request.method=='POST':
@@ -707,23 +707,23 @@ def gfo(request):
         else:
             # print('error')
             result='error'
-        return render(request, 'gfo.html', {'result':result, 'previousp':p, 'previousn':n, 'previousa':a, 'previousb':b, 'previousmod':m})
-    return render(request, 'gfo.html')
+        return render(request, 'EncryptionTools/gfo.html', {'result':result, 'previousp':p, 'previousn':n, 'previousa':a, 'previousb':b, 'previousmod':m})
+    return render(request, 'EncryptionTools/gfo.html')
 
 def cipher_caesar(request):
     if request.method=='POST':
         text=request.POST.get('text')
         key=request.POST.get('key')
         if len(key.strip())==0 or len(text.strip())==0:
-            return render(request, 'cipher_rowtrans.html', {'result':'key and text must not be empty', 'previoustext':text, 'previouskey':key})
+            return render(request, 'EncryptionTools/cipher_rowtrans.html', {'result':'key and text must not be empty', 'previoustext':text, 'previouskey':key})
         if request.POST.get('enc'):
             result=caesar_cipher.caesar_cipher_enc(text, int(key))
         elif request.POST.get('dec'):
             result=caesar_cipher.caesar_cipher_dec(text, int(key))
         else:
             result='error'
-        return render(request, 'cipher_caesar.html', {'result':result, 'previoustext':text, 'previouskey':key})
-    return render(request, 'cipher_caesar.html', {'previoustext':'', 'previouskey':'', 'result':''})
+        return render(request, 'EncryptionTools/cipher_caesar.html', {'result':result, 'previoustext':text, 'previouskey':key})
+    return render(request, 'EncryptionTools/cipher_caesar.html', {'previoustext':'', 'previouskey':'', 'result':''})
 
 def cipher_affine(request):
     if request.method=='POST':
@@ -731,15 +731,15 @@ def cipher_affine(request):
         a=request.POST.get('a')
         b=request.POST.get('b')
         if len(a.strip())==0 or len(text.strip())==0 or len(b.strip())==0:
-            return render(request, 'cipher_affine.html', {'result':'a, b, and text must not be empty', 'previoustext':text, 'previousa':a, 'previousb':b})
+            return render(request, 'EncryptionTools/cipher_affine.html', {'result':'a, b, and text must not be empty', 'previoustext':text, 'previousa':a, 'previousb':b})
         if request.POST.get('enc'):
             result=affine_cipher.affine_cipher_enc(text, int(a), int(b))
         elif request.POST.get('dec'):
             result=affine_cipher.affine_cipher_dec(text, int(a), int(b))
         else:
             result='error'
-        return render(request, 'cipher_affine.html', {'result':result, 'previoustext':text, 'previousa':a, 'previousb':b})
-    return render(request, 'cipher_affine.html', {'previoustext':'', 'previousa':'', 'previousb':'', 'result':''})
+        return render(request, 'EncryptionTools/cipher_affine.html', {'result':result, 'previoustext':text, 'previousa':a, 'previousb':b})
+    return render(request, 'EncryptionTools/cipher_affine.html', {'previoustext':'', 'previousa':'', 'previousb':'', 'result':''})
 
 def cipher_hill(request):
     if request.method=='POST':
@@ -756,20 +756,20 @@ def cipher_hill(request):
         h=request.POST.get('h')
         i=request.POST.get('i')
         if len(text.strip())==0:
-            return render(request, 'cipher_hill.html', {'result':'text and key must not be empty', 'previoustext':text, 'previousa':a, 'previousb':b, 'previousc':c, 'previousd':d, 'previouse':e, 'previousf':f, 'previousg':g, 'previoush':h, 'previousi':i})
+            return render(request, 'EncryptionTools/cipher_hill.html', {'result':'text and key must not be empty', 'previoustext':text, 'previousa':a, 'previousb':b, 'previousc':c, 'previousd':d, 'previouse':e, 'previousf':f, 'previousg':g, 'previoush':h, 'previousi':i})
         if c:
             try:
                 key.append([int(a), int(b), int(c)])
                 key.append([int(d), int(e), int(f)])
                 key.append([int(g), int(h), int(i)])
             except:
-                return render(request, 'cipher_hill.html', {'result':'a, b, c, d, e, f, g, h, i, and text must not be empty', 'previoustext':text, 'previousa':a, 'previousb':b, 'previousc':c, 'previousd':d, 'previouse':e, 'previousf':f, 'previousg':g, 'previoush':h, 'previousi':i})
+                return render(request, 'EncryptionTools/cipher_hill.html', {'result':'a, b, c, d, e, f, g, h, i, and text must not be empty', 'previoustext':text, 'previousa':a, 'previousb':b, 'previousc':c, 'previousd':d, 'previouse':e, 'previousf':f, 'previousg':g, 'previoush':h, 'previousi':i})
         else:
             try:
                 key.append([int(a), int(b)])
                 key.append([int(d), int(e)])
             except:
-                return render(request, 'cipher_hill.html', {'result':'a, b, d, e, and text must not be empty', 'previoustext':text, 'previousa':a, 'previousb':b, 'previousc':c, 'previousd':d, 'previouse':e, 'previousf':f, 'previousg':g, 'previoush':h, 'previousi':i})
+                return render(request, 'EncryptionTools/cipher_hill.html', {'result':'a, b, d, e, and text must not be empty', 'previoustext':text, 'previousa':a, 'previousb':b, 'previousc':c, 'previousd':d, 'previouse':e, 'previousf':f, 'previousg':g, 'previoush':h, 'previousi':i})
 
         if request.POST.get('enc'):
             if len(key)==2:
@@ -787,38 +787,38 @@ def cipher_hill(request):
                 result='error'
         else:
             result='error'
-        return render(request, 'cipher_hill.html', {'result':result, 'previoustext':text, 'previousa':a, 'previousb':b, 'previousc':c, 'previousd':d, 'previouse':e, 'previousf':f, 'previousg':g, 'previoush':h, 'previousi':i})
-    return render(request, 'cipher_hill.html', {'previoustext':'', 'previousa':'', 'previousb':'', 'previousc':'', 'previousd':'', 'previouse':'', 'previousf':'', 'previousg':'', 'previoush':'', 'previousi':'', 'result':''})
+        return render(request, 'EncryptionTools/cipher_hill.html', {'result':result, 'previoustext':text, 'previousa':a, 'previousb':b, 'previousc':c, 'previousd':d, 'previouse':e, 'previousf':f, 'previousg':g, 'previoush':h, 'previousi':i})
+    return render(request, 'EncryptionTools/cipher_hill.html', {'previoustext':'', 'previousa':'', 'previousb':'', 'previousc':'', 'previousd':'', 'previouse':'', 'previousf':'', 'previousg':'', 'previoush':'', 'previousi':'', 'result':''})
 
 def cipher_playfair(request):
     if request.method=='POST':
         text=request.POST.get('text')
         key=request.POST.get('key')
         if len(key.strip())==0 or len(text.strip())==0:
-            return render(request, 'cipher_playfair.html', {'result':'key and text must not be empty', 'previoustext':text, 'previouskey':key})
+            return render(request, 'EncryptionTools/cipher_playfair.html', {'result':'key and text must not be empty', 'previoustext':text, 'previouskey':key})
         if request.POST.get('enc'):
             result=playfair_cipher.playfair_cipher_enc(text, key)
         elif request.POST.get('dec'):
             result=playfair_cipher.playfair_cipher_dec(text, key)
         else:
             result='error'
-        return render(request, 'cipher_playfair.html', {'result':result, 'previoustext':text, 'previouskey':key})
-    return render(request, 'cipher_playfair.html')
+        return render(request, 'EncryptionTools/cipher_playfair.html', {'result':result, 'previoustext':text, 'previouskey':key})
+    return render(request, 'EncryptionTools/cipher_playfair.html')
 
 def cipher_viginere(request):
     if request.method=='POST':
         text=request.POST.get('text')
         key=request.POST.get('key')
         if len(key.strip())==0 or len(text.strip())==0:
-            return render(request, 'cipher_viginere.html', {'result':'key and text must not be empty', 'previoustext':text, 'previouskey':key})
+            return render(request, 'EncryptionTools/cipher_viginere.html', {'result':'key and text must not be empty', 'previoustext':text, 'previouskey':key})
         if request.POST.get('enc'):
             result=viginere_cipher.viginere_cipher_enc(text, key)
         elif request.POST.get('dec'):
             result=viginere_cipher.viginere_cipher_dec(text, key)
         else:
             result='error'
-        return render(request, 'cipher_viginere.html', {'result':result, 'previoustext':text, 'previouskey':key})
-    return render(request, 'cipher_viginere.html')
+        return render(request, 'EncryptionTools/cipher_viginere.html', {'result':result, 'previoustext':text, 'previouskey':key})
+    return render(request, 'EncryptionTools/cipher_viginere.html')
 
 
 def cipher_monoalphabetic(request):
@@ -826,42 +826,42 @@ def cipher_monoalphabetic(request):
         text=request.POST.get('text')
         key=request.POST.get('key')
         if len(key.strip())==0 or len(text.strip())==0:
-            return render(request, 'cipher_monoalphabetic.html', {'result':'key and text must not be empty', 'previoustext':text, 'previouskey':key})
+            return render(request, 'EncryptionTools/cipher_monoalphabetic.html', {'result':'key and text must not be empty', 'previoustext':text, 'previouskey':key})
         if request.POST.get('enc'):
             result=monoalphabetic_cipher.monoalphabetic_cipher_enc(text, key)
         elif request.POST.get('dec'):
             result=monoalphabetic_cipher.monoalphabetic_cipher_dec(text, key)
         else:
             result='error'
-        return render(request, 'cipher_monoalphabetic.html', {'result':result, 'previoustext':text, 'previouskey':key})
-    return render(request, 'cipher_monoalphabetic.html')
+        return render(request, 'EncryptionTools/cipher_monoalphabetic.html', {'result':result, 'previoustext':text, 'previouskey':key})
+    return render(request, 'EncryptionTools/cipher_monoalphabetic.html')
 
 def cipher_railfence(request):
     if request.method=='POST':
         text=request.POST.get('text')
         key=request.POST.get('key')
         if len(key.strip())==0 or len(text.strip())==0:
-            return render(request, 'cipher_railfence.html', {'result':'key and text must not be empty', 'previoustext':text, 'previouskey':key})
+            return render(request, 'EncryptionTools/cipher_railfence.html', {'result':'key and text must not be empty', 'previoustext':text, 'previouskey':key})
         if request.POST.get('enc'):
             result=rail_fence_cipher.rail_fence_cipher_enc(text, int(key))
         elif request.POST.get('dec'):
             result=rail_fence_cipher.rail_fence_cipher_dec(text, int(key))
         else:
             result='error'
-        return render(request, 'cipher_railfence.html', {'result':result, 'previoustext':text, 'previouskey':key})
-    return render(request, 'cipher_railfence.html')
+        return render(request, 'EncryptionTools/cipher_railfence.html', {'result':result, 'previoustext':text, 'previouskey':key})
+    return render(request, 'EncryptionTools/cipher_railfence.html')
 
 def cipher_rowtrans(request):
     if request.method=='POST':
         text=request.POST.get('text')
         key=request.POST.get('key')
         if len(key.strip())==0 or len(text.strip())==0:
-            return render(request, 'cipher_rowtrans.html', {'result':'key and text must not be empty', 'previoustext':text, 'previouskey':key})
+            return render(request, 'EncryptionTools/cipher_rowtrans.html', {'result':'key and text must not be empty', 'previoustext':text, 'previouskey':key})
         if request.POST.get('enc'):
             result=row_transposition_cipher.row_transposition_cipher_enc(text, key)
         elif request.POST.get('dec'):
             result=row_transposition_cipher.row_transposition_cipher_dec(text, key)
         else:
             result='error'
-        return render(request, 'cipher_rowtrans.html', {'result':result, 'previoustext':text, 'previouskey':key})
-    return render(request, 'cipher_rowtrans.html')
+        return render(request, 'EncryptionTools/cipher_rowtrans.html', {'result':result, 'previoustext':text, 'previouskey':key})
+    return render(request, 'EncryptionTools/cipher_rowtrans.html')

@@ -1,0 +1,195 @@
+{% extends 'EncryptionTools/default.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block meta %}
+<meta name="description" content="A website for encryption tools and ciphers.">
+<meta name="keywords" content="Encryption, Tools, Ciphers, Cryptography, AES, DES, Hill, Playfair, Viginere, Monoalphabetic, Rail Fence, Row Transposition, Caesar, Affine, Modular Inverse, Galois Field Operations, Exponentiation, ECB, CBC, OFB, Block Operations, Elliptic Curve">
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .pages{
+        margin: 0;
+        padding-left: 1rem;
+    }
+    .col a, .columns a{
+        text-decoration: none;
+        color: black;
+    }
+    .col a:hover, .columns a:hover{
+        color: #151fdd;
+        transition: 150ms ease-out;
+    }
+    .columns{
+        display: none;
+    }
+    @media screen and (max-width: 1100px) {
+        .columns{
+            display: block;
+            width: 100%;
+            margin: 0;
+            padding-bottom: 1rem;
+        }
+        .big-screen{
+            display: none;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container p-2">
+    <h1 class="text-center">Encryption Tools</h1>
+</div>
+
+<div class="container big-screen">
+    <div class="row align-items-start">
+        <div class="col">
+            <h5>Tools</h5>
+            <ul class="pages">
+                <li><a href="/EncryptionTools/enc_text">Encrypt English Messages</a></li>
+                <li><a href="/EncryptionTools/base64">Base 64</a></li>
+                <li><a href="/EncryptionTools/text_hex">Convert Between Text and Hexadecimal</a></li>
+                <li><a href="/EncryptionTools/mod_inv">Modular Inverse</a></li>
+                <li><a href="/EncryptionTools/gfo">Gallois Field Operations</a></li>
+                <li><a href="/EncryptionTools/exponentiation">Exponentation</a></li>
+            </ul>
+            <br>
+            <h5>Ciphers</h5>
+            <ul class="pages">
+                <li><a href="/EncryptionTools/caesar">Ceasar</a></li>
+                <li><a href="/EncryptionTools/affine">Affine</a></li>
+                <li><a href="/EncryptionTools/hill">Hill</a></li>
+                <li><a href="/EncryptionTools/playfair">Playfair</a></li>
+                <li><a href="/EncryptionTools/viginere">Viginere</a></li>
+                <li><a href="/EncryptionTools/monoalphabetic">Monoalphabetic</a></li>
+                <li><a href="/EncryptionTools/railfence">Rail Fence</a></li>
+                <li><a href="/EncryptionTools/rowtrans">Row Transposition</a></li>
+            </ul>
+        </div>
+        <div class="col">
+            <h5>Encryption Standards</h5>
+            <ul class="pages">
+                <li><a href="/EncryptionTools/aes">AES</a></li>
+                <li><a href="/EncryptionTools/des">DES</a></li>
+            </ul>
+            <br>
+            <h5>Block Operations</h5>
+            <ul class="pages">
+                <li><a href="/EncryptionTools/ecb">ECB</a></li>
+                <li><a href="/EncryptionTools/cbc">CBC</a></li>
+                <li>CFB</li>
+                <li><a href="/EncryptionTools/ofb">OFB</a></li>
+                <li>CTR</li>
+            </ul>
+            <br>
+            <h5>Elliptic Curve</h5>
+            <ul class="pages">
+                <li><a href="/EncryptionTools/eco">EC operations</a></li>
+                <li><a href="/EncryptionTools/ecdh">Diffie-Hellman</a></li>
+                <li><a href="/EncryptionTools/ecc">Elliptic Curve Cryptography</a></li>
+            </ul>
+        </div>
+        <div class="col">
+            <h5>Number Theory</h5>
+            <ul class="pages">
+                <li><a href="/EncryptionTools/rpt">Relative Primality Testing</a></li>
+                <li><a href="/EncryptionTools/etf">Euler Totient Function</a></li>
+                <li><a href="/EncryptionTools/mr">Miller Rabin</a></li>
+                <li><a href="/EncryptionTools/crt">Chinese Remainder Theorem</a></li>
+                <li><a href="/EncryptionTools/pr">Primitive Roots</a></li>
+                <li><a href="/EncryptionTools/dl">Discrete Logarithms</a></li>
+            </ul>
+            <br>
+            <h5>Public Key Cryptography</h5>
+            <ul class="pages">
+                <li><a href="/EncryptionTools/rsa">RSA</a></li>
+                <li><a href="/EncryptionTools/dh">Diffie-Hellman</a></li>
+                <li><a href="/EncryptionTools/elgamal">ElGamal</a></li>
+                <li><a href="/EncryptionTools/break_rsa">Break RSA</a></li>
+            </ul>
+            <br>
+            <h5>Digital Signature</h5>
+            <ul class="pages">
+                <li><a href="/EncryptionTools/dselgamal">ElGamal</a></li>
+                <li><a href="/EncryptionTools/ecdsa">ECDSA</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="columns">
+        <h5>Tools</h5>
+        <ul class="pages">
+            <li><a href="/EncryptionTools/enc_text">Encrypt English Messages</a></li>
+            <li><a href="/EncryptionTools/text_hex">Convert Between Text and Hexadecimal</a></li>
+            <li><a href="/EncryptionTools/mod_inv">Modular Inverse</a></li>
+            <li><a href="/EncryptionTools/gfo">Gallois Field Operations</a></li>
+            <li><a href="/EncryptionTools/exponentiation">Exponentation</a></li>
+        </ul>
+        <br>
+        <h5>Ciphers</h5>
+        <ul class="pages">
+            <li><a href="/EncryptionTools/caesar">Ceasar</a></li>
+            <li><a href="/EncryptionTools/affine">Affine</a></li>
+            <li><a href="/EncryptionTools/hill">Hill</a></li>
+            <li><a href="/EncryptionTools/playfair">Playfair</a></li>
+            <li><a href="/EncryptionTools/viginere">Viginere</a></li>
+            <li><a href="/EncryptionTools/monoalphabetic">Monoalphabetic</a></li>
+            <li><a href="/EncryptionTools/railfence">Rail Fence</a></li>
+            <li><a href="/EncryptionTools/rowtrans">Row Transposition</a></li>
+        </ul>
+    </div>
+    <div class="columns">
+        <h5>Encryption Standards</h5>
+        <ul class="pages">
+            <li><a href="/EncryptionTools/aes">AES</a></li>
+            <li><a href="/EncryptionTools/des">DES</a></li>
+        </ul>
+        <br>
+        <h5>Block Operations</h5>
+        <ul class="pages">
+            <li><a href="/EncryptionTools/ecb">ECB</a></li>
+            <li><a href="/EncryptionTools/cbc">CBC</a></li>
+            <li>CFB</li>
+            <li><a href="/EncryptionTools/ofb">OFB</a></li>
+            <li>CTR</li>
+        </ul>
+        <br>
+        <h5>Elliptic Curve</h5>
+        <ul class="pages">
+            <li><a href="/EncryptionTools/eco">EC operations</a></li>
+            <li><a href="/EncryptionTools/ecdh">Diffie-Hellman</a></li>
+            <li><a href="/EncryptionTools/ecc">Elliptic Curve Cryptography</a></li>
+        </ul>
+    </div>
+    <div class="columns">
+        <h5>Number Theory</h5>
+        <ul class="pages">
+            <li><a href="/EncryptionTools/rpt">Relative Primality Testing</a></li>
+            <li><a href="/EncryptionTools/etf">Euler Totient Function</a></li>
+            <li><a href="/EncryptionTools/mr">Miller Rabin</a></li>
+            <li><a href="/EncryptionTools/crt">Chinese Remainder Theorem</a></li>
+            <li><a href="/EncryptionTools/pr">Primitive Roots</a></li>
+            <li><a href="/EncryptionTools/dl">Discrete Logarithms</a></li>
+        </ul>
+        <br>
+        <h5>Public Key Cryptography</h5>
+        <ul class="pages">
+            <li><a href="/EncryptionTools/rsa">RSA</a></li>
+            <li><a href="/EncryptionTools/dh">Diffie-Hellman</a></li>
+            <li><a href="/EncryptionTools/elgamal">ElGamal</a></li>
+            <li><a href="/EncryptionTools/break_rsa">Break RSA</a></li>
+        </ul>
+        <br>
+        <h5>Digital Signature</h5>
+        <ul class="pages">
+            <li><a href="/EncryptionTools/dselgamal">ElGamal</a></li>
+            <li><a href="/EncryptionTools/ecdsa">ECDSA</a></li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}
