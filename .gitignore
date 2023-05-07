@@ -5,3 +5,4 @@ mysite/mysite/secretKey.py
 *.pyc
 */__pycache__/*
 *.pyc
+.pyc
