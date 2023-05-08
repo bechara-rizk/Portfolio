@@ -22,4 +22,5 @@ urlpatterns = [
     path('GpaCalc/', include('Gpacalc.urls')),
     # path('', include('main.urls')),
     path('', include('EncryptionTools.urls')),
+    path('blackjack/', include('blackjack.urls')),
 ]
