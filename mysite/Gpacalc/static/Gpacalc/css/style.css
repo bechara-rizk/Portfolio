@@ -1,0 +1,70 @@
+body {
+  background-color: gray;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: white;
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+}
+
+.title {
+  margin-bottom: 25px;
+}
+
+.title2 {
+  margin-top: 20px;
+}
+
+.course {
+  margin-bottom: 15px;
+}
+
+.list {
+  margin-right: 5px;
+}
+
+.courseInput {
+  width: 110px;
+}
+
+.infoInput2 {
+  width: 60px;
+}
+
+input {
+  border: 2px solid #fff;
+  border-radius: 5px;
+}
+
+input:focus {
+  outline: none;
+}
+
+.infoInput1 {
+  width: 70px;
+}
+
+.inputdiv {
+  margin-bottom: 10px;
+}
+
+.footer {
+  /* position: fixed;
+    left: 0;
+    bottom: 0; */
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 5px;
+  border: 2px solid white;
+  border-radius: 5px;
+}
+
+ul {
+  padding-left: 1rem;
+}
+
+.previousgpa {
+  text-align: center;
+}
+/*# sourceMappingURL=style.css.map */

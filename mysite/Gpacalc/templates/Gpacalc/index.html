@@ -1,12 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <title>GPA Calculator</title>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>gpacalc</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    {% load static %}
+    <link href="{% static 'Gpacalc/css/style.css' %}" rel="stylesheet">
 </head>
+
 <body>
+    <div class="header">
+        <h1 class="title">GPA Calculator</h1>
+    </div>
     
+    <div id="calculator">
+        <ul>
+            <li>
+                <div class="course" id="0">
+                    <input class="list courseInput" type="text" placeholder="Course Name">
+                    <select id="letter0" class="list" onchange="getLetGrade(this,0),getCumulativeGPA()">
+                        <option value="0">Letter Grade</option>
+                        <option value="4.3">A+</option>
+                        <option value="4">A</option>
+                        <option value="3.7">A-</option>
+                        <option value="3.3">B+</option>
+                        <option value="3">B</option>
+                        <option value="2.7">B-</option>
+                        <option value="2.3">C+</option>
+                        <option value="2">C</option>
+                        <option value="1.7">C-</option>
+                        <option value="1.3">D+</option>
+                        <option value="1">D</option>
+                        <option value="0">F</option>
+                    </select>
+                    <!-- <select id="cred02" class="list" onchange="getLetGrade(this,0),getCumulativeGPA()">
+                        <option value="0">Credits</option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select> -->
+                    <input placeholder="Credits" class="infoInput1" id="cred0" oninput="getLetGrade(this,0),getCumulativeGPA()" type="number" min='0'></input>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <button onclick="addCode()" class="btn btn-primary">Add Course</button>
+    <h3 class="title2" id='added'>GPA :</h3>
+    <div id="previousgpa" class="previousgpa">
+        <h2 id="title2">Cumulative GPA</h2>
+        <div class="previousInfo previousgpa">
+            <div class="inputdiv">
+                <label for="gpa">Previous GPA:</label>
+                <input class="infoInput2" id="prevgpa" oninput="getCumulativeGPA()" type="number" value="0" min="0" max="4.3"></input>
+            </div>
+            <div class="inputdiv">
+                <label for="credits">Previous Credits:</label>
+                <input class="infoInput2" id="prevcreds" oninput="getCumulativeGPA()" type="number" value="0" min='0'></input>
+            </div>
+        </div>
+        <h3 id="cumulativegpa" class="">Cumulative GPA :</h3>
+    </div>
+
+    <div class="footer">
+        Made by <a href="https://github.com/bechara-rizk" target="_blank" class="anchor">Bechara Rizk</a>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    {% load static %}
+    <script src="{% static 'Gpacalc/js/script.js' %}"></script>
 </body>
+
 </html>
