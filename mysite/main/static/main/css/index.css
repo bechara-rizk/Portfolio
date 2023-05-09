@@ -1,0 +1,14 @@
+.row{
+    margin: 0 auto;
+    max-width: 984px;
+}
+
+.cards{
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #d1d1d1;
+}
+
+body{
+    background-color: aliceblue;
+}

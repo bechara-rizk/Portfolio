@@ -20,7 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('EncryptionTools/', include('EncryptionTools.urls')),
     path('GpaCalc/', include('Gpacalc.urls')),
-    # path('', include('main.urls')),
-    path('', include('EncryptionTools.urls')),
+    path('', include('main.urls')),
+    # path('', include('EncryptionTools.urls')),
     path('blackjack/', include('blackjack.urls')),
 ]

@@ -4,9 +4,59 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>My Projects Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/css/index.css' %}">
 </head>
 <body>
-    main
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-2">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Bechara Rizk</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Main Page</a>
+              </li>
+              {% for project in details %}
+                <li class="nav-item">
+                    <a class="nav-link" href={{project.2}}>{{project.0}}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    <div class="row">
+        <div class="d-flex justify-content-center align-items-center">
+          <h1>Welcome to my portfolio!</h1>
+        </div>
+    </div>
+    <div class="row">
+    {% for project in details %}
+      <div style="padding: 0 12px; width: max-content; margin: 0 auto;">
+          <div class="card cards my-2" style="width: 19rem;">
+            <img src="{% static 'main/'|add:project.4 %}" class="card-img-top" alt="...">
+            <div class="card-body mt-1" style="border-top: 1px solid rgba(0,0,0,.125);">
+              <h4 class="card-title">{{project.0}}</h4>
+              <p class="card-text">{{project.1}}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                      <a href={{project.2}} class="btn btn-primary" style="margin-right: 15px;">Page</a>
+                      <a href={{project.3}} class="btn btn-primary" target="_blank">Github</a>
+                  </div>
+                  <small class="text-muted">{{project.5}}</small>
+              </div>
+            </div>
+          </div>
+      </div>
+    {% endfor %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
