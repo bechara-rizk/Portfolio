@@ -25,3 +25,13 @@ body{
     pointer-events: none;
     opacity: 0.5;
 }
+
+@media (prefers-color-scheme: dark){
+    .cards{
+        background-color: rgb(76, 88, 100);
+    }
+    body{
+        background-color: rgb(44, 52, 59);
+        color: white;
+    }
+}
