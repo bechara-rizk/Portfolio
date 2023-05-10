@@ -39,7 +39,7 @@
     <div class="row">
     {% for project in details %}
       <div style="padding: 0 12px; width: max-content; margin: 0 auto;">
-          <div class="card cards my-2" style="width: 19rem;">
+          <div class="card cards my-2{% if project.6 %} disabled{% endif %}" style="width: 19rem;">
             <img src="{% static 'main/'|add:project.4 %}" class="card-img-top" alt="...">
             <div class="card-body mt-1" style="border-top: 1px solid rgba(0,0,0,.125);">
               <h4 class="card-title">{{project.0}}</h4>

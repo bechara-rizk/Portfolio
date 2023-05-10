@@ -9,6 +9,19 @@
     background-color: rgb(192, 223, 250);
 }
 
+.card-text{
+    min-height: 48px;
+}
+
+.card-img-top{
+    height:302px;
+}
+
 body{
     background-color: aliceblue;
+}
+
+.disabled{
+    pointer-events: none;
+    opacity: 0.5;
 }
